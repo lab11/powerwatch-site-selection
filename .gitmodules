@@ -1,0 +1,4 @@
+[submodule "site-selection-data"]
+	path = site-selection-data
+	url = keybase://team/gridwatch/site-selection-data
+	branch = master

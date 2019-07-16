@@ -53,5 +53,10 @@ If you do both of these things then
 ```
 $ git clone --recursive git@github.com:lab11/powerwatch-site-selection
 ```
+should work as expected. If you already have the repository you can run:
 
-should work as expected.
+```
+$ git submodule update --init --recursive
+```
+
+to get the submodule.
