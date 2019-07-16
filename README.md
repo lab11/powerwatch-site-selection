@@ -35,3 +35,23 @@ Open Python window in ArcMap
 Alternatively, you can use the python console, but this requires additional setup to integrate with ArcMap which is not covered in this tutorial
 In this window you can write or paste any code from the programs provided
 Before running the script, you can check each command, and a description of the command and inputs will appear in the console to the right
+
+# To Access Encrypted Data
+
+There is a keybase encrypted data repository that we use internally. It is
+placed as a submodule of this repo. To access it you must first be part of the
+gridwatch keybase team, then run:
+
+```
+$ git config --global --add protocol.keybase.allow always
+```
+
+in your terminal to enable git to transport keybase repos as submodules.
+
+If you do both of these things then
+
+```
+$ git clone --recursive git@github.com:lab11/powerwatch-site-selection
+```
+
+should work as expected.
