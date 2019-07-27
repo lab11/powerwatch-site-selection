@@ -1,0 +1,35 @@
+Notes on cleaning the grid network
+
+- When first opening or importing the low voltage distribution network, it is likely there will be many topological errors in the digitization process. The topological errors generally manifest themselves as either overshoots or undershoots in the low voltage lines, meaning that a number of low voltage lines do not connect to each other properly resulting in gaps which can significanly hinder the network building and analysis.
+
+- Starting off you will need to make sure that all of the shapefiles and desired data frames are in the same coordinate system and projection. The default coordinate system is WGS84, which is good because it is the typical lat, lon system used around the world (except places like China). The projection most fitting to West Accra is the Universal Transverse Mercator Zone 30 North (UTM Zone 30N). This is the most granular, widely accepted projection for the area.
+	Resources on projections:
+	http://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/what-are-map-projections.htm
+
+- The cleaning process generally airs on the conservative side, since it is likely that the data will be cleaned remotely from the study area and there is little means of verification of whether a change made in the topology makes the data more accurate or departs from ground truth. Therefore there will be instances where the cleaning process will rely on the judgement of the person handling the data.
+
+- These maps are generally used for accurately analyzing neighborhood level geographic areas, so when possible low voltage poles and lines should remain as close to their original position as possible. When building a network dataset through ArcCatalog, there is an option to rank layers for tolerance adjustments, it is at this point that the ranking should be 1.LV Poles 2.LV Lines 3. Transformers 4. MV lines. However, since many of the errors are in digitizing are in the low voltage lines, moving verteces of lines is inevetable.
+
+- Underground Lines are generally provided in a seperate layer,  labeled at "LV_UG" or "low_voltage_UG". They are often missing links between LV line segments or LV lines and transformers. Make sure that this layer exists and is imported before doing cleaning.
+
+- The first step to fixing these topological errors is to set a tolerance when building the network. A tolerance is a snapping distance at which the system recognized 2 points as 1. Choosing the right tolerance is a practice of balance. A tolerance too small will miss close connections and the grid will have islands, a tolerance too large will shift elements of the topology to the extent that the grid is geographically distorted. Choosing a tolerance will come up as an option during the build network wizard, or if you you are using a template, the tolerance used in the template will be set.
+
+- After the grid network is build, there will be an option to check the topology of the network according to rules. The main rules used in Dansoman and Kaneshie were the "no dangles" rule to identify where endpoints of LV lines were in order to manually adjust them using the Editor tool
+	Resources describing the topology rules and cleaning:
+	http://desktop.arcgis.com/en/arcmap/10.3/manage-data/topologies/validating-a-topology.htm
+	https://sites.google.com/site/ochaimwiki/geodata-preparation-manual/how-to-check-topology-using-arcgis
+
+Manual cleaning: 
+
+The following steps are historical steps of how the current datasets were cleaned. Since this was done on the fly and without knowing beforehand what the patterns and common errors are, cleaning was mostly done manually using the visual interface. This can be a time consuming and iterative process, with a lot of clicking and checking.
+
+- The process by which the current distribution networks were cleaned was manual, i.e visually inspecting and using the edit tool to change verticies to the most reasonable location. 
+
+- The main rule set for the topology is that there should be "no dangles", so when the topology is validated all the endpoints of low voltage lines will be highlighted as errors. This might be a really large number, so addressing each one can be time consuming. 
+
+- Highlighting all of these points and snapping them with a small tolerance (<0.00001 degrees) will snap points together without altering the placement of the majority of the lines. This will take care of many of the errors. End points can also be legitimate terminal points of low voltage lines, these were marked as exceptions in the validation tool. 
+
+- The distribution system sends electricity from 11kv Feeders to transformers which transform the voltage down the the distribution level. Transformers will therefore be on at the intersections of 11kV Feeders and low voltage lines
+
+- At the transformers, the nearest low voltage lines were snapped to the transformer. In SOME cases a transformer layer will have a field which identifies how many low voltage lines connect to the transformer which can help inform which or how many low voltage lines directly connect to that transformer. Some sitrics also have a field in the low voltage line layer which identifies which transformer it belongs to. Color coding low voltage lines by the transformer ID field can help expidite this process. The reason for doing this manually is that a tolerance snapping may snap together 2/3 line endpoints to the transformer which will affect the topology and network analysis in the future.
+
