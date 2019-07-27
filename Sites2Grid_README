@@ -1,0 +1,31 @@
+Documentation for finding transformers within the experimental areas
+
+The goal of this process is to extract a table with experimental sites and the associated transformers which service the area or a particular power watch device
+
+Required data:
+	- Powerwatch device locations with associated site ID OR experimental site polygons (csv with lat lon or shapefiles)
+	- Low voltage poles with TX_ID field OR Low voltage lines with TX_ID field (shapefiles)
+	- Existing and injecton transformer point data (shapefile)
+
+For the MOST ACCURATE RESULTS, percise locations of powerwatch devices are preferable to site polygons, low voltage poles with TX_ID field filled is preferrable to low voltage lines
+
+The primary tool for this analysis is a spatial join. Spatial join joins attributes of one feature and adds it to a feature of interest based on location. i.e. a powerwatch device adopts the Transformer ID associated with the closest low voltage distribution pole. This is one of the most common analyses in GIS, and can be done in a multitude of ways including through ArcGIS, QGIS, or even through geopandas in Python.
+
+
+ArcMAP documentation:
+http://desktop.arcgis.com/en/arcmap/10.3/tools/analysis-toolbox/spatial-join.htm
+
+QGIS documentation:
+https://www.qgistutorials.com/en/docs/performing_spatial_joins.html
+
+Geopandas documentation:
+https://www.earthdatascience.org/courses/earth-analytics-python/spatial-data-vector-shapefiles/spatial-joins-in-python-geopandas-shapely/
+
+
+STEPS:
+1. Load all of the layers into desired workspace
+2. Spatially join low voltage poles/lines to powerwatch devices. Since powerwatch devices are point data, this may require making a buffer and then spatially joining using a "crosses" or "within" function. If powerwatch device location data is not available and only the site polygons are available, then spatially join the poles "within" the polygons to the site polygons. This should result in a table with a fields "Site_ID" and "TX_ID". Sites that were not located because of spotty data should be visually inspected and adited as exceptions. 
+3. This table should then be joined to a master list of sites using the Site_ID field in a one-to-many join. Although there ideally is only 1 transforemer being monitored, it is possible for one site to cover several transformers. 
+4. An additional field called "additional transformers" should be created to store transformer IDs other than the most common unique transformer ID associated with each site. This helps to accomodate some of the error which may be associated with the infrastructure data.
+5. Use the existing transformer layer as a sanity check and visually compare the sites and names of transformers neaby
+6. The final column is for the injection transformer associated with the treatment sites. Another spatial join will take the TX_ID of the injection transformer and append it to the site closest to it. Be sure to limit the analysis to the treatment sites. Otherwise limit the spatial join search radius, as no injection tx should be within the bounds of an experimental site by design.
