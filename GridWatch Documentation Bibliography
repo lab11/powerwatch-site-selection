@@ -1,5 +1,11 @@
 GridWatch Documentation Bibliography
 
+https://github.com/lab11/powerwatch-site-selection
+Github Repo with the code necessary to complete a site selection. Inside are python codes of selecting treatment and control sites, readmes on how to get started with GIS software, notes on cleaning the grid, a readme on how to run the codes, a template network dataset, and a link to the google drive containg tutorial videos and FAQ
+
+https://drive.google.com/drive/folders/1geGzc_eBLLp1vWY2ZXwSEj5t0OvLKM8d?usp=sharing
+Link to video tutorials and FAQ
+
 Keybase paths:
 /keybase/team/gridwatch/GW_CONFIDENTIAL/Data/
 Here are the Gridwatch research sites with their respective transformer and feeders attached. Also in this folder is a README discussing how to do this in the future.
@@ -10,9 +16,5 @@ In this folder are map images of feeders aroung Accra by district, Monthly SAIFI
 /keybase/team/gridwatch/site_selection_documentation/
 This folder contains flowcharts for the site selection process, meant to be a companion to the python scripts. Also here is a very useful tutorial on building network datasets from scratch, given by Professor John Radke at Berkeley. He is the GIS Guru to the stars.
 
-https://github.com/lab11/powerwatch-site-selection
-Github Repo with the code necessary to complete a site selection. Inside are python codes of selecting treatment and control sites, readmes on how to get started with GIS software, notes on cleaning the grid, a readme on how to run the codes, a template network dataset, and a link to the google drive containg tutorial videos and FAQ
-
-https://drive.google.com/drive/folders/1geGzc_eBLLp1vWY2ZXwSEj5t0OvLKM8d?usp=sharing
-Link to video tutorials and FAQ
-
+/keybase/team/gridwatch/achimota_grid/GWNetworkAchimota.gdb
+Geodatabase with all available districts and EXISTING grid infrastructure up-to-date. Each district also contains an injection transformer layer where it was available, making each district ready for site selection. Achimota, Dansoman, and Kaneshie have the highest topological quality since they have been manually cleaned. Geodatabase can be opened in ArcGIS and QGIS and each layer can then be exported as a shapefile as necessary.
